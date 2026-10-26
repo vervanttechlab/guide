@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your Palengke Online orders">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:4000 http://localhost; img-src 'self' http://localhost:4000 http://localhost data:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>My orders · Palengke Online</title>
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/orders.js" defer></script>
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-palengke" aria-label="Main">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">Palengke Online</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#site-nav"
+                aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="site-nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Shop</a></li>
+          </ul>
+          <div id="nav-user" class="d-flex flex-wrap align-items-center gap-2 py-2 py-lg-0"></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container py-4">
+    <h1 class="h3 mb-4">My orders</h1>
+    <div id="orders-alert" role="status" tabindex="-1" hidden></div>
+    <div id="loading" class="text-center py-5" hidden>
+      <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading your orders…</span></div>
+    </div>
+    <div id="no-orders" class="text-center py-5" hidden>
+      <p class="lead">You have no orders yet.</p>
+      <a href="index.html" class="btn btn-palengke">Start shopping</a>
+    </div>
+    <!-- One card per order, newest first -->
+    <div id="order-list" class="vstack gap-4"></div>
+  </main>
+
+  <footer class="bg-palengke-dark text-white py-4 mt-5">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+      <p class="mb-0">&copy; 2026 Palengke Online</p>
+      <p class="mb-0">We use your details only for your orders (RA 10173).</p>
+    </div>
+  </footer>
+</body>
+</html>

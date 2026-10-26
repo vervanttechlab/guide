@@ -1,0 +1,228 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Juan Dela Cruz",
+      "email": "juan@example.com",
+      "role": "customer",
+      "salt": "bf34be619d1acb16dc4e0710f4b19522",
+      "password_hash": "ba4f43082146be26077cec9c371295157866b27c7e8818ad51df307f5a39087b",
+      "created_at": "2026-10-01T08:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Maria Santos",
+      "email": "maria@example.com",
+      "role": "seller",
+      "salt": "94d5be5d36eeb5185aa613218d8c4fd4",
+      "password_hash": "60640a4a146d685184e8200e6735fdf9afce02d0a5af90590449d1c03d7a176b",
+      "created_at": "2026-10-01T09:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "name": "Pedro Reyes",
+      "email": "pedro@example.com",
+      "role": "seller",
+      "salt": "dd8f4ba79b95b9afedee1787a1b59e2c",
+      "password_hash": "644405257f13b3865f04bf7ff8547c8459dee98c76d03d0c7d51f520ddeb0bc4",
+      "created_at": "2026-10-01T10:00:00.000Z"
+    }
+  ],
+  "tokens": [],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Vegetables"
+    },
+    {
+      "id": 2,
+      "name": "Fruits"
+    },
+    {
+      "id": 3,
+      "name": "Seafood"
+    },
+    {
+      "id": 4,
+      "name": "Rice & Grains"
+    },
+    {
+      "id": 5,
+      "name": "Native Delicacies"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Kangkong (1 bundle)",
+      "description": "Fresh water spinach from Laguna, good for sinigang and adobong kangkong.",
+      "price": 25,
+      "stock": 120,
+      "category_id": 1,
+      "image_url": "/uploads/kangkong.webp",
+      "seller_id": 2,
+      "created_at": "2026-10-01T18:00:00.000Z",
+      "updated_at": "2026-10-01T18:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Pechay Baguio (1 kg)",
+      "description": "Crisp napa cabbage from Benguet.",
+      "price": 60,
+      "stock": 45,
+      "category_id": 1,
+      "image_url": "/uploads/pechay.webp",
+      "seller_id": 2,
+      "created_at": "2026-10-01T19:00:00.000Z",
+      "updated_at": "2026-10-01T19:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "name": "Ampalaya (1 kg)",
+      "description": "Bitter gourd, harvested this week.",
+      "price": 90,
+      "stock": 30,
+      "category_id": 1,
+      "image_url": "/uploads/ampalaya.webp",
+      "seller_id": 3,
+      "created_at": "2026-10-01T20:00:00.000Z",
+      "updated_at": "2026-10-01T20:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "name": "Carabao Mango (1 kg)",
+      "description": "Sweet Guimaras mangoes, ripe in 2 to 3 days.",
+      "price": 160,
+      "stock": 25,
+      "category_id": 2,
+      "image_url": "/uploads/mango.webp",
+      "seller_id": 2,
+      "created_at": "2026-10-01T21:00:00.000Z",
+      "updated_at": "2026-10-01T21:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "name": "Lakatan Banana (1 dozen)",
+      "description": "Yellow lakatan bananas from Davao.",
+      "price": 95,
+      "stock": 40,
+      "category_id": 2,
+      "image_url": "/uploads/banana.webp",
+      "seller_id": 3,
+      "created_at": "2026-10-01T22:00:00.000Z",
+      "updated_at": "2026-10-01T22:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "name": "Calamansi (1/2 kg)",
+      "description": "Native calamansi for juice and sawsawan.",
+      "price": 45,
+      "stock": 0,
+      "category_id": 2,
+      "image_url": "/uploads/calamansi.webp",
+      "seller_id": 3,
+      "created_at": "2026-10-01T23:00:00.000Z",
+      "updated_at": "2026-10-01T23:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "name": "Bangus (1 kg)",
+      "description": "Milkfish from Dagupan, cleaned and scaled.",
+      "price": 190,
+      "stock": 18,
+      "category_id": 3,
+      "image_url": "/uploads/bangus.webp",
+      "seller_id": 2,
+      "created_at": "2026-10-02T00:00:00.000Z",
+      "updated_at": "2026-10-02T00:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "name": "Tilapia (1 kg)",
+      "description": "Live-caught tilapia from Taal Lake.",
+      "price": 140,
+      "stock": 22,
+      "category_id": 3,
+      "image_url": "/uploads/tilapia.webp",
+      "seller_id": 3,
+      "created_at": "2026-10-02T01:00:00.000Z",
+      "updated_at": "2026-10-02T01:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "name": "Dinorado Rice (5 kg)",
+      "description": "Aromatic premium rice.",
+      "price": 380,
+      "stock": 15,
+      "category_id": 4,
+      "image_url": "/uploads/dinorado.webp",
+      "seller_id": 2,
+      "created_at": "2026-10-02T02:00:00.000Z",
+      "updated_at": "2026-10-02T02:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "name": "Brown Rice (2 kg)",
+      "description": "Unpolished brown rice, high in fiber.",
+      "price": 165,
+      "stock": 12,
+      "category_id": 4,
+      "image_url": "/uploads/brownrice.webp",
+      "seller_id": 3,
+      "created_at": "2026-10-02T03:00:00.000Z",
+      "updated_at": "2026-10-02T03:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "name": "Bibingka (2 pcs)",
+      "description": "Rice cake baked in banana leaves with salted egg.",
+      "price": 70,
+      "stock": 20,
+      "category_id": 5,
+      "image_url": "/uploads/bibingka.webp",
+      "seller_id": 2,
+      "created_at": "2026-10-02T04:00:00.000Z",
+      "updated_at": "2026-10-02T04:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "name": "Suman sa Ibos (6 pcs)",
+      "description": "Sticky rice wrapped in palm leaves.",
+      "price": 55,
+      "stock": 35,
+      "category_id": 5,
+      "image_url": null,
+      "seller_id": 3,
+      "created_at": "2026-10-02T05:00:00.000Z",
+      "updated_at": "2026-10-02T05:00:00.000Z"
+    }
+  ],
+  "cart_items": [],
+  "orders": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "address": "Blk 5 Lot 12 Mabini St., Lipa City, Batangas",
+      "notes": "Please call when you are outside.",
+      "status": "placed",
+      "total": 390,
+      "created_at": "2026-10-05T03:15:00.000Z",
+      "items": [
+        {
+          "product_id": 4,
+          "name": "Carabao Mango (1 kg)",
+          "price": 160,
+          "quantity": 2,
+          "line_total": 320
+        },
+        {
+          "product_id": 11,
+          "name": "Bibingka (2 pcs)",
+          "price": 70,
+          "quantity": 1,
+          "line_total": 70
+        }
+      ]
+    }
+  ]
+}

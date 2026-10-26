@@ -1,0 +1,32 @@
+{
+  // Start the API from VS Code: Run and Debug panel (Ctrl+Shift+D) -> pick one -> green play button.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start API",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Start API (reset sample data)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "args": ["--reset"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Start API (slow: 1 second per answer)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "args": ["--slow"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

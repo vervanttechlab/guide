@@ -1,0 +1,163 @@
+### Palengke Online API requests (VS Code REST Client: click "Send Request" above each one)
+@api = http://localhost:4000/api
+
+### Health check
+GET {{api}}/health
+
+### Categories
+GET {{api}}/categories
+
+### Products: first page (8 per page)
+GET {{api}}/products
+
+### Search + category + price range + sort
+GET {{api}}/products?search=rice&category_id=4&min_price=100&sort=price_asc
+
+### One category's products
+GET {{api}}/categories/2/products
+
+### One product
+GET {{api}}/products/1
+
+### Log in as a seller (copy the token into @token below)
+# @name login
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{ "email": "maria@example.com", "password": "Seller123" }
+
+###
+@token = {{login.response.body.token}}
+
+### Who am I?
+GET {{api}}/auth/me
+Authorization: Bearer {{token}}
+
+### My products (seller)
+GET {{api}}/seller/products
+Authorization: Bearer {{token}}
+
+### Add a product (seller)
+# @name created
+POST {{api}}/products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "name": "Talong (1 kg)", "price": 70, "stock": 10, "category_id": 1, "description": "Eggplant from Batangas." }
+
+### Add a product WITH a photo (multipart/form-data; the server renames the file to a UUID)
+# @name withPhoto
+POST {{api}}/products
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=PalengkeBoundary
+
+--PalengkeBoundary
+Content-Disposition: form-data; name="name"
+
+Talong with photo (1 kg)
+--PalengkeBoundary
+Content-Disposition: form-data; name="price"
+
+72
+--PalengkeBoundary
+Content-Disposition: form-data; name="stock"
+
+6
+--PalengkeBoundary
+Content-Disposition: form-data; name="category_id"
+
+1
+--PalengkeBoundary
+Content-Disposition: form-data; name="image"; filename="sample-photo.jpg"
+Content-Type: image/jpeg
+
+< ./sample-photo.jpg
+--PalengkeBoundary--
+
+### Delete the product with the photo (its UUID file is deleted too)
+DELETE {{api}}/products/{{withPhoto.response.body.data.id}}
+Authorization: Bearer {{token}}
+
+### Edit it (seller, own product)
+PUT {{api}}/products/{{created.response.body.data.id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "name": "Talong (1 kg)", "price": 75, "stock": 8, "category_id": 1, "description": "Eggplant from Batangas." }
+
+### Delete it (seller, own product)
+DELETE {{api}}/products/{{created.response.body.data.id}}
+Authorization: Bearer {{token}}
+
+### Error check: Maria edits Pedro's product -> 403
+PUT {{api}}/products/3
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "name": "Ampalaya (1 kg)", "price": 1, "stock": 1, "category_id": 1 }
+
+### Error check: register with bad data -> 422 with errors per field
+POST {{api}}/auth/register
+Content-Type: application/json
+
+{ "name": "J", "email": "juan@example.com", "password": "short", "role": "admin" }
+
+### Log out (the token stops working)
+POST {{api}}/auth/logout
+Authorization: Bearer {{token}}
+
+### ===== Seller: search, filter and pages =====
+GET {{api}}/seller/products?search=rice&stock=in&sort=name&page=1
+Authorization: Bearer {{token}}
+
+### Seller: inventory totals
+GET {{api}}/seller/summary
+Authorization: Bearer {{token}}
+
+### ===== Customer: cart and orders (log in as Juan first) =====
+# @name customerLogin
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{ "email": "juan@example.com", "password": "Customer123" }
+
+###
+@customerToken = {{customerLogin.response.body.token}}
+
+### See the cart
+GET {{api}}/cart
+Authorization: Bearer {{customerToken}}
+
+### Add 2 of product 1 (adds to the quantity already in the cart)
+POST {{api}}/cart
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{ "product_id": 1, "quantity": 2 }
+
+### Change the quantity of product 1 to 3
+PUT {{api}}/cart/1
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{ "quantity": 3 }
+
+### Remove product 1 from the cart
+DELETE {{api}}/cart/1
+Authorization: Bearer {{customerToken}}
+
+### Checkout: turns the cart into an order (add something to the cart first)
+POST {{api}}/orders
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{ "address": "Blk 5 Lot 12 Mabini St., Lipa City", "notes": "Please call when you are outside." }
+
+### My orders, newest first
+GET {{api}}/orders
+Authorization: Bearer {{customerToken}}
+
+### One order
+GET {{api}}/orders/1
+Authorization: Bearer {{customerToken}}
+

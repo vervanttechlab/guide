@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Palengke Online: fresh produce from local sellers">
+  <!-- CSP: our own files, plus the API server for data (connect-src) and product photos (img-src).
+       Both API addresses are allowed: Node on :4000 and PHP on XAMPP (port 80) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:4000 http://localhost; img-src 'self' http://localhost:4000 http://localhost data:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Palengke Online</title>
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/shop.js" defer></script>
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-palengke" aria-label="Main">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">Palengke Online</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#site-nav"
+                aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="site-nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Shop</a></li>
+          </ul>
+          <div id="nav-user" class="d-flex flex-wrap align-items-center gap-2 py-2 py-lg-0"></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero-band text-white" aria-labelledby="page-title">
+      <div class="container py-4 py-md-5">
+        <h1 id="page-title" class="fw-bold">Fresh from the palengke</h1>
+        <p class="lead mb-0">Vegetables, fruits, seafood and kakanin from local sellers.</p>
+      </div>
+    </section>
+
+    <div class="container py-4">
+      <div class="row g-4">
+        <!-- Filters: a sidebar from 992px; folded behind a button on smaller screens -->
+        <aside class="col-lg-3" aria-labelledby="filters-title">
+          <button class="btn btn-outline-palengke w-100 d-lg-none" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#filters" aria-expanded="false" aria-controls="filters">Search and filters</button>
+          <div class="collapse d-lg-block mt-3 mt-lg-0" id="filters">
+            <h2 id="filters-title" class="h5">Find products</h2>
+            <form id="filter-form" class="vstack gap-3" novalidate>
+              <div>
+                <label for="search" class="form-label">Search</label>
+                <input type="search" id="search" class="form-control" maxlength="40" placeholder="e.g. mango">
+              </div>
+              <div>
+                <label for="category" class="form-label">Category</label>
+                <select id="category" class="form-select">
+                  <option value="">All categories</option>
+                </select>
+              </div>
+              <fieldset>
+                <legend class="form-label fs-6">Price (₱)</legend>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <label for="min-price" class="visually-hidden">Minimum price</label>
+                    <input type="number" id="min-price" class="form-control" min="0" step="1" placeholder="Min">
+                  </div>
+                  <div class="col-6">
+                    <label for="max-price" class="visually-hidden">Maximum price</label>
+                    <input type="number" id="max-price" class="form-control" min="0" step="1" placeholder="Max" aria-describedby="max-price-error">
+                    <div id="max-price-error" class="invalid-feedback">Max must be more than min.</div>
+                  </div>
+                </div>
+              </fieldset>
+              <div>
+                <label for="sort" class="form-label">Sort by</label>
+                <select id="sort" class="form-select">
+                  <option value="newest">Newest</option>
+                  <option value="price_asc">Price: low to high</option>
+                  <option value="price_desc">Price: high to low</option>
+                  <option value="name">Name</option>
+                </select>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-palengke flex-fill">Apply</button>
+                <button type="button" id="clear-filters" class="btn btn-outline-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+        </aside>
+
+        <!-- Results -->
+        <section class="col-lg-9" aria-labelledby="results-title">
+          <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+            <h2 id="results-title" class="h4 mb-0">Products</h2>
+            <p id="result-count" class="text-body-secondary mb-0" role="status"></p>
+          </div>
+          <div id="shop-alert" hidden></div>
+          <div id="loading" class="text-center py-5" hidden>
+            <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading products…</span></div>
+          </div>
+          <div id="product-grid" class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4"></div>
+          <nav class="mt-4" aria-label="Product pages">
+            <ul id="pagination" class="pagination justify-content-center flex-wrap"></ul>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Product details (filled from GET /api/products/:id) -->
+  <div class="modal fade" id="product-modal" tabindex="-1" aria-labelledby="product-modal-title">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="product-modal-title">Product</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-md-6"><img id="pm-image" class="img-fluid rounded product-photo" src="images/no-image.webp" alt="" width="600" height="450"></div>
+            <div class="col-md-6">
+              <p class="mb-2"><span id="pm-category" class="badge text-bg-light border"></span></p>
+              <p id="pm-price" class="fs-3 fw-bold text-palengke mb-1"></p>
+              <p id="pm-stock" class="mb-3"></p>
+              <p id="pm-description"></p>
+              <p class="text-body-secondary small">Sold by <span id="pm-seller"></span></p>
+              <!-- Customers (and visitors) can buy from here; hidden for sellers -->
+              <div id="pm-buy" class="d-flex align-items-end gap-2">
+                <div>
+                  <label for="pm-qty" class="form-label small mb-1">Quantity</label>
+                  <input type="number" id="pm-qty" class="form-control qty-box" min="1" value="1" aria-describedby="pm-qty-error">
+                </div>
+                <button type="button" class="btn btn-palengke" id="pm-add">Add to cart</button>
+              </div>
+              <div id="pm-qty-error" class="text-danger small mt-1" role="status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Short messages in the corner, e.g. "Added to your cart." (Bootstrap toast) -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="page-toast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex align-items-center">
+        <div class="toast-body" id="page-toast-text"></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-palengke-dark text-white py-4 mt-5">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+      <p class="mb-0">&copy; 2026 Palengke Online</p>
+      <p class="mb-0">We use your details only for your orders (RA 10173).</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your Palengke Online cart and checkout">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; connect-src 'self' http://localhost:4000 http://localhost; img-src 'self' http://localhost:4000 http://localhost data:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>My cart · Palengke Online</title>
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#main">Skip to content</a>
+
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-palengke" aria-label="Main">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">Palengke Online</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#site-nav"
+                aria-controls="site-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="site-nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Shop</a></li>
+          </ul>
+          <div id="nav-user" class="d-flex flex-wrap align-items-center gap-2 py-2 py-lg-0"></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container py-4">
+    <h1 class="h3 mb-4">My cart</h1>
+    <div id="cart-alert" role="status" tabindex="-1" hidden></div>
+    <div id="loading" class="text-center py-5" hidden>
+      <div class="spinner-border text-success" role="status"><span class="visually-hidden">Loading your cart…</span></div>
+    </div>
+
+    <!-- Shown when the cart is empty -->
+    <div id="empty-cart" class="text-center py-5" hidden>
+      <p class="lead">Your cart is empty.</p>
+      <a href="index.html" class="btn btn-palengke">Browse products</a>
+    </div>
+
+    <!-- Lines on the left (8 of 12 columns), summary and checkout on the right (4 of 12) from 992px -->
+    <div id="cart-content" class="row g-4" hidden>
+      <section class="col-lg-8" aria-labelledby="items-title">
+        <h2 id="items-title" class="visually-hidden">Items</h2>
+        <ul id="cart-lines" class="list-group"></ul>
+      </section>
+
+      <aside class="col-lg-4" aria-labelledby="checkout-title">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 id="checkout-title" class="h5">Order summary</h2>
+            <dl class="row mb-3">
+              <dt class="col-6 fw-normal">Items</dt><dd class="col-6 text-end" id="cart-count">0</dd>
+              <dt class="col-6 fs-5">Total</dt><dd class="col-6 text-end fs-5 fw-bold text-palengke" id="cart-total">₱0.00</dd>
+            </dl>
+            <form id="checkout-form" novalidate>
+              <div class="mb-3">
+                <label for="address" class="form-label">Delivery address</label>
+                <textarea id="address" class="form-control" rows="2" maxlength="200" required aria-describedby="address-error" placeholder="House no., street, barangay, city"></textarea>
+                <div id="address-error" class="invalid-feedback">Enter your delivery address (5 to 200 characters).</div>
+              </div>
+              <div class="mb-3">
+                <label for="notes" class="form-label">Notes for the seller <span class="text-body-secondary">(optional)</span></label>
+                <input type="text" id="notes" class="form-control" maxlength="200" aria-describedby="notes-error">
+                <div id="notes-error" class="invalid-feedback">Up to 200 characters.</div>
+              </div>
+              <p class="small text-body-secondary">Payment: cash on delivery.</p>
+              <button type="submit" class="btn btn-palengke w-100" id="place-order-btn">Place order</button>
+            </form>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="bg-palengke-dark text-white py-4 mt-5">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+      <p class="mb-0">&copy; 2026 Palengke Online</p>
+      <p class="mb-0">We use your details only for your orders (RA 10173).</p>
+    </div>
+  </footer>
+</body>
+</html>

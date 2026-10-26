@@ -1,0 +1,12 @@
+# Apache settings for the Palengke Online API (XAMPP)
+RewriteEngine On
+
+# XAMPP's Apache doesn't know .webp photos: send them with the right type
+AddType image/webp .webp
+
+# Pass the "Authorization: Bearer <token>" header on to PHP (Apache may drop it otherwise)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Real files (e.g. uploads/mango.webp) are served as they are; everything else goes to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

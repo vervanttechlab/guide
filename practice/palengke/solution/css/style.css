@@ -1,0 +1,61 @@
+/* Palengke Online: brand colours and details Bootstrap doesn't provide.
+   Values come from the designer's style guide (provided/STYLE-GUIDE.md). */
+:root {
+  --palengke-green: #2e7d32;
+  --palengke-green-dark: #1b5e20;
+  --palengke-orange: #e65100;
+  --palengke-bg: #f4f7f1;
+}
+body { background-color: var(--palengke-bg); }
+
+.bg-palengke { background-color: var(--palengke-green); }
+.bg-palengke-dark { background-color: var(--palengke-green-dark); }
+.text-palengke { color: var(--palengke-orange); }
+
+/* Brand buttons on top of Bootstrap's button variables */
+.btn-palengke {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--palengke-green);
+  --bs-btn-border-color: var(--palengke-green);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--palengke-green-dark);
+  --bs-btn-hover-border-color: var(--palengke-green-dark);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--palengke-green-dark);
+  --bs-btn-active-border-color: var(--palengke-green-dark);
+  --bs-btn-disabled-bg: var(--palengke-green);
+  --bs-btn-disabled-border-color: var(--palengke-green);
+  --bs-btn-focus-shadow-rgb: 46, 125, 50;
+}
+.btn-outline-palengke {
+  --bs-btn-color: var(--palengke-green);
+  --bs-btn-border-color: var(--palengke-green);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--palengke-green);
+  --bs-btn-hover-border-color: var(--palengke-green);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--palengke-green-dark);
+  --bs-btn-active-border-color: var(--palengke-green-dark);
+  --bs-btn-focus-shadow-rgb: 46, 125, 50;
+}
+.form-check-input:checked { background-color: var(--palengke-green); border-color: var(--palengke-green); }
+
+/* Pagination in the brand colour (Bootstrap pagination variables) */
+.pagination {
+  --bs-pagination-color: var(--palengke-green);
+  --bs-pagination-hover-color: var(--palengke-green-dark);
+  --bs-pagination-focus-color: var(--palengke-green-dark);
+  --bs-pagination-active-bg: var(--palengke-green);
+  --bs-pagination-active-border-color: var(--palengke-green);
+  --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(46, 125, 50, .25);
+}
+
+/* Hero band */
+.hero-band { background: linear-gradient(120deg, var(--palengke-green-dark), var(--palengke-green)); }
+
+/* Product photos keep a 4:3 shape */
+.product-photo { aspect-ratio: 4 / 3; width: 100%; height: auto; object-fit: cover; }
+.thumb { object-fit: cover; }   /* table thumbnails and the photo preview */
+
+/* Small quantity boxes (shop details window, cart) */
+.qty-box { width: 5.5rem; }
